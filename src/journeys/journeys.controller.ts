@@ -1,6 +1,6 @@
-import { Controller, Get, Query } from "@nestjs/common";
-import { Ijourney } from "./interfaces/journey.interface";
-import { JourneysService } from "./journeys.service";
+import { Controller, Get, Query } from '@nestjs/common';
+import { Ijourney } from './interfaces/journey.interface';
+import { JourneysService } from './journeys.service';
 
 @Controller('journeys')
 export class JourneysController {
@@ -11,7 +11,7 @@ export class JourneysController {
                   @Query('destination') destination: string,
                   @Query('date') date: string): Promise<Ijourney[]> {
         if (origin && destination) {
-            return this.journeysService.findAll(origin, destination);
+            return this.journeysService.findAll(origin, destination, date);
         }
         return Promise.reject();
     }
