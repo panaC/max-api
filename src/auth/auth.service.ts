@@ -1,5 +1,5 @@
 import { JwtService } from '@nestjs/jwt';
-import { Injectable, Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 import { User } from './interfaces/user.interface';
@@ -7,7 +7,7 @@ import { UserDto } from './dto/user.dto';
 import { USER_MODEL_PROVIDER } from '../constants';
 import { Model } from 'mongoose';
 
-@Component()
+@Injectable()
 export class AuthService {
     constructor(
         @Inject(USER_MODEL_PROVIDER) private readonly userModel: Model<User>,
@@ -23,7 +23,7 @@ export class AuthService {
     }
 
     async validateUser(payload: JwtPayload): Promise<any> {
-        return await this.userModel.findOne({ email: payload.email });
+        return await this.userModel.findOne(payload);
     }
 
     async register(userDto: UserDto) {

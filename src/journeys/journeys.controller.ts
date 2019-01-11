@@ -4,11 +4,11 @@ import { JourneysService } from './journeys.service';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('journeys')
-@UseGuards(AuthGuard())
 export class JourneysController {
     constructor(private readonly journeysService: JourneysService) { }
 
     @Get()
+    @UseGuards(AuthGuard())
     async findAll(@Query('origin') origin: string,
                   @Query('destination') destination: string,
                   @Query('date') date: string): Promise<Ijourney[]> {

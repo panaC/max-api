@@ -1,6 +1,7 @@
 import { AuthService } from './auth.service';
-import { Post, Controller, Body, Get, Query } from '@nestjs/common';
+import { Post, Controller, Body, Get, Query, UseGuards } from '@nestjs/common';
 import { UserDto } from './dto/user.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -14,7 +15,7 @@ export class AuthController {
     }
 
     @Get('validate-user')
-    public async validateUser(@Query() request: { email: string }) {
+    public async validateUser(@Query() request: UserDto) {
         return this.authservice.validateUser(request);
     }
 

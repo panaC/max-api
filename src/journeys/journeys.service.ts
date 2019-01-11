@@ -1,10 +1,10 @@
-import { Component, Header } from '@nestjs/common';
+import { Component, Header, Injectable } from '@nestjs/common';
 import { Ijourney } from './interfaces/journey.interface';
 import request = require('request');
 import { TGVMAX_URL, TOKEN_URL } from '../constants';
 import * as moment from 'moment';
 
-@Component()
+@Injectable()
 export class JourneysService {
     private train: Ijourney[] = [];
 

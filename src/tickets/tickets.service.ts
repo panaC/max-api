@@ -1,11 +1,11 @@
 import { Model } from 'mongoose';
-import { Component, Inject } from '@nestjs/common';
+import { Component, Inject, Injectable } from '@nestjs/common';
 
 import { Ticket } from './interfaces/ticket.interface';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { TICKET_MODEL_PROVIDER } from '../constants';
 
-@Component()
+@Injectable()
 export class TicketsService {
     constructor(
         @Inject(TICKET_MODEL_PROVIDER) private readonly ticketModel: Model<Ticket>) {

@@ -7,7 +7,7 @@ import { DatabaseModule } from 'dist/database/database.module';
 import { AuthController } from './auth.controler';
 import { authProviders } from './auth.providers';
 
-const passportModule = PassportModule.register({ defaultStrategy: 'jwt' })
+const passportModule = PassportModule.register({ defaultStrategy: 'jwt' });
 
 @Module({
   imports: [
