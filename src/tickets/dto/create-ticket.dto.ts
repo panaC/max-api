@@ -1,3 +1,4 @@
+// TODO: add class-validator
 
 export class CreateTicketDto {
     readonly origin: string;

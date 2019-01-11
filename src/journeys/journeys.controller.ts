@@ -1,8 +1,10 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { Ijourney } from './interfaces/journey.interface';
 import { JourneysService } from './journeys.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('journeys')
+@UseGuards(AuthGuard())
 export class JourneysController {
     constructor(private readonly journeysService: JourneysService) { }
 
