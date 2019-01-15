@@ -2,9 +2,7 @@ import { AuthService } from './auth.service';
 import { Post, Controller, Body, Get, Query, UseGuards, HttpException, HttpStatus, HttpCode } from '@nestjs/common';
 import { UserDto } from './dto/user.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { validate } from 'class-validator';
 import { ApiUseTags, ApiResponse, ApiBearerAuth, ApiImplicitBody } from '@nestjs/swagger';
-import { User } from './interfaces/user.interface';
 
 @Controller('auth')
 @ApiUseTags('Authentification')
@@ -20,7 +18,12 @@ export class AuthController {
         description: 'login success',
     })
     public async login(@Body() userDto: UserDto) {
-        return this.authservice.createToken(userDto);
+        try {
+            await this.authservice.checkUser(userDto);
+            return this.authservice.createToken(userDto);
+        } catch (err) {
+            throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Post('validate-user')

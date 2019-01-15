@@ -6,6 +6,7 @@ import { User } from './interfaces/user.interface';
 import { UserDto } from './dto/user.dto';
 import { USER_MODEL_PROVIDER } from '../constants';
 import { Model } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +27,15 @@ export class AuthService {
         };
     }
 
+    async checkUser(userDto: UserDto) {
+        const user = await this.userModel.findOne({
+            email: userDto.email,
+        });
+        if (!(user && await bcrypt.compare(userDto.password, user.password) === true)) {
+            throw new Error('invalid credential');
+        }
+    }
+
     async validateUser(payload: JwtPayload): Promise<any> {
         return await this.userModel.findOne({ email: payload.email });
     }
@@ -37,7 +47,7 @@ export class AuthService {
         } catch (err) {
             const customError = 'User already exist or something went wrong';
                 // err.code === '11000' ? 'User already exist' : 'Something went wrong ..';
-            throw new Error(customError);
+            throw new Error(err);
         }
     }
 }
