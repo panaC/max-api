@@ -20,7 +20,7 @@ export class AuthController {
     public async login(@Body() userDto: UserDto) {
         try {
             await this.authservice.checkUser(userDto);
-            return this.authservice.createToken(userDto);
+            return await this.authservice.createToken(userDto);
         } catch (err) {
             throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
         }
@@ -33,7 +33,25 @@ export class AuthController {
         description: 'get validate user',
     })
     public async validateUser(@Body() request: UserDto) {
-        return this.authservice.validateUser(request);
+        try {
+            return await this.authservice.validateUser(request);
+        } catch (err) {
+            throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Get('verify')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: 200,
+        description: 'verify credential',
+    })
+    public async verify(@Query('token') token: string) {
+        try {
+            return await this.authservice.verifyToken(token);
+        } catch (err) {
+            throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Post('register')

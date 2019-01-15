@@ -11,3 +11,7 @@ export const TGVMAX_URL = 'https://sncf-simulateur-api-prod.azurewebsites.net/ap
 export const TOKEN_URL = 'https://simulateur.tgvmax.fr/VSC/#/1/';
 
 export const SALT_NUMBER = 10;
+
+export const JWT_EXPIRATION = 3600;
+
+export const JWT_SECRET_KEY = 'secretKey';

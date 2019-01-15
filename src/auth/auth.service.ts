@@ -4,7 +4,7 @@ import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 import { User } from './interfaces/user.interface';
 import { UserDto } from './dto/user.dto';
-import { USER_MODEL_PROVIDER } from '../constants';
+import { USER_MODEL_PROVIDER, JWT_EXPIRATION } from '../constants';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
@@ -22,9 +22,13 @@ export class AuthService {
         const user: JwtPayload = { email: userDto.email };
         const accessToken = this.jwtService.sign(user);
         return {
-            expiresIn: 3600,
+            expiresIn: JWT_EXPIRATION,
             accessToken,
         };
+    }
+
+    async verifyToken(token: string) {
+        return this.jwtService.verify(token);
     }
 
     async checkUser(userDto: UserDto) {
