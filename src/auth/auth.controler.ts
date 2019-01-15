@@ -3,7 +3,6 @@ import { Post, Controller, Body, Get, Query, UseGuards, HttpException, HttpStatu
 import { UserDto } from './dto/user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { validate } from 'class-validator';
-import { ValidationPipe } from '../pipe/validation.pipe';
 
 @Controller('auth')
 export class AuthController {
@@ -12,7 +11,7 @@ export class AuthController {
     }
 
     @Post('login')
-    public async login(@Body(new ValidationPipe()) userDto: UserDto) {
+    public async login(@Body() userDto: UserDto) {
         return this.authservice.createToken(userDto);
     }
 
