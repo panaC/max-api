@@ -8,7 +8,7 @@ import { AuthModule } from "../auth/auth.module";
     AuthModule,
   ],
   controllers: [JourneysController],
-  components: [
+  providers: [
     JourneysService,
   ],
 })

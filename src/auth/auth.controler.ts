@@ -1,5 +1,5 @@
 import { AuthService } from './auth.service';
-import { Post, Controller, Body, Get, Query, UseGuards } from '@nestjs/common';
+import { Post, Controller, Body, Get, Query, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { UserDto } from './dto/user.dto';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -21,6 +21,17 @@ export class AuthController {
 
     @Post('register')
     public async register(@Body() userDto: UserDto) {
-        return this.authservice.register(userDto);
+        try {
+            await this.authservice.register(userDto);
+            return await this.authservice.createToken(userDto);
+        } catch (err) {
+            throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Get('test')
+    @UseGuards(AuthGuard())
+    public test() {
+        return [];
     }
 }

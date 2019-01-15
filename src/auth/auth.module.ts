@@ -23,7 +23,7 @@ const passportModule = PassportModule.register({ defaultStrategy: 'jwt' });
   controllers: [
       AuthController,
   ],
-  components: [
+  providers: [
       AuthService,
       JwtStrategy,
       ...authProviders,

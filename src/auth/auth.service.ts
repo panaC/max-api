@@ -15,15 +15,19 @@ export class AuthService {
 
     }
 
-    async createToken(userDto: UserDto): Promise<string> {
+    async createToken(userDto: UserDto) {
         // In the real-world app you shouldn't expose this method publicly
         // instead, return a token once you verify user credentials
         const user: JwtPayload = { email: userDto.email };
-        return this.jwtService.sign(user);
+        const accessToken = this.jwtService.sign(user);
+        return {
+            expiresIn: 3600,
+            accessToken,
+        };
     }
 
     async validateUser(payload: JwtPayload): Promise<any> {
-        return await this.userModel.findOne(payload);
+        return await this.userModel.findOne({ email: payload.email });
     }
 
     async register(userDto: UserDto) {
@@ -31,8 +35,8 @@ export class AuthService {
             const createdUser = new this.userModel(userDto);
             await createdUser.save();
         } catch (err) {
-            const customError =
-                err.code === '11000' ? 'User already exist' : 'Something went wrong ..';
+            const customError = 'User already exist or something went wrong';
+                // err.code === '11000' ? 'User already exist' : 'Something went wrong ..';
             throw new Error(customError);
         }
     }
