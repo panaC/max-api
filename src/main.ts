@@ -11,10 +11,10 @@ async function bootstrap() {
 
   // Swagger Configuration
   const options = new DocumentBuilder()
-    .setTitle('Cities API')
-    .setDescription('A simple API using Nest')
+    .setTitle('TGV Max Booking')
+    .setDescription('An API for booking ticket')
     .setVersion('1.0')
-    .addTag('cities')
+    .addTag('max')
     .addBearerAuth('Authorization', 'header')
     .build();
     // .setBasePath(basePath)
