@@ -3,7 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
-import { DatabaseModule } from 'dist/database/database.module';
+import { DatabaseModule } from '../database/database.module';
 import { AuthController } from './auth.controler';
 import { authProviders } from './auth.providers';
 import { JWT_SECRET_KEY, JWT_EXPIRATION } from '../constants';
