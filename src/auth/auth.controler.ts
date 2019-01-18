@@ -26,20 +26,6 @@ export class AuthController {
         }
     }
 
-    @Post('validate-user')
-    @HttpCode(HttpStatus.OK)
-    @ApiResponse({
-        status: 200,
-        description: 'get validate user',
-    })
-    public async validateUser(@Body() request: UserDto) {
-        try {
-            return await this.authservice.validateUser(request);
-        } catch (err) {
-            throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @Get('verify')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
@@ -49,6 +35,24 @@ export class AuthController {
     public async verify(@Query('token') token: string) {
         try {
             return await this.authservice.verifyToken(token);
+        } catch (err) {
+            throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Get('user')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: 200,
+        description: 'get user account with the token',
+    })
+    public async userAccount(@Query('token') token: string) {
+        try {
+            const verify = await this.authservice.verifyToken(token);
+            if (verify.email) {
+                return await this.authservice.getUser(verify.email);
+            }
+            throw new Error('invalid credential');
         } catch (err) {
             throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
         }

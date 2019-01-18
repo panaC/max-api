@@ -31,6 +31,13 @@ export class AuthService {
         return this.jwtService.verify(token);
     }
 
+    async getUser(e: string) {
+        const user = await this.userModel.findOne({
+            email: e,
+        });
+        return user;
+    }
+
     async checkUser(userDto: UserDto) {
         const user = await this.userModel.findOne({
             email: userDto.email,
