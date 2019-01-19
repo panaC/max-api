@@ -58,7 +58,7 @@ export class TicketsController {
             throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
         }
     }
- 
+
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
         status: 200,
@@ -101,9 +101,9 @@ export class TicketsController {
         description: 'delete tickets : reserved appli',
     })
     @Delete('appli')
-    async deleteOneAppli(@Query('credential') credential: string) {
+    async deleteOneAppli(@Query('credential') credential: string, @Body('ticket') ticketDto: TicketDto) {
         try {
-            return await this.ticketsService.deleteOneAppli();
+            return await this.ticketsService.deleteOneAppli(ticketDto);
         } catch (err) {
             throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
         }
