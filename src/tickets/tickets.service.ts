@@ -12,16 +12,20 @@ export class TicketsService {
 
     }
 
-    async delete(deleteTicketDto: TicketDto): Promise<void> {
-        this.ticketModel.deleteOne(deleteTicketDto).exec();
+    async delete(ticketDto: TicketDto): Promise<void> {
+        await this.ticketModel.deleteOne(ticketDto).exec();
     }
 
-    async create(createTicketDto: TicketDto): Promise<Ticket> {
-        const createdTicket = new this.ticketModel(createTicketDto);
+    async create(ticketDto: TicketDto): Promise<Ticket> {
+        const createdTicket = new this.ticketModel(ticketDto);
         return await createdTicket.save();
     }
 
-    async findAll(): Promise<Ticket[]> {
-        return await this.ticketModel.find().exec();
+    async find(e: string): Promise<Ticket[]> {
+        return await this.ticketModel.find({ email: e }).exec();
+    }
+
+    async update(ticketDto: TicketDto) {
+        this.ticketModel.update({ email: ticketDto.email }, ticketDto);
     }
 }
