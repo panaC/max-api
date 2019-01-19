@@ -13,10 +13,14 @@ export const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  role: {
+  hccode: {
     type: String,
-    enum: ['Customer', 'Admin'],
-    default: 'Customer',
+    required: true,
+    unique: true,
+  },
+  dateOfBirth: {
+    type: String,
+    required: true,
   },
 });
 

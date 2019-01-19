@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, validate } from 'class-validator';
+import { IsEmail, IsNotEmpty, validate, IsDate } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger';
 
 export class UserDto {
@@ -11,5 +11,11 @@ export class UserDto {
   @IsNotEmpty()
   readonly password: string;
 
-  readonly role: string;
+  readonly hccode: string;
+  @ApiModelProperty()
+  @IsNotEmpty()
+
+  @ApiModelProperty()
+  @IsNotEmpty()
+  readonly dateOfBirth: string;
 }
