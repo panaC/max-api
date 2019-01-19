@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { Component, Inject, Injectable } from '@nestjs/common';
 
 import { Ticket } from './interfaces/ticket.interface';
-import { CreateTicketDto } from './dto/create-ticket.dto';
+import { TicketDto } from './dto/slot.dto';
 import { TICKET_MODEL_PROVIDER } from '../constants';
 
 @Injectable()
@@ -12,11 +12,11 @@ export class TicketsService {
 
     }
 
-    async delete(deleteTicketDto: CreateTicketDto): Promise<void> {
+    async delete(deleteTicketDto: TicketDto): Promise<void> {
         this.ticketModel.deleteOne(deleteTicketDto).exec();
     }
 
-    async create(createTicketDto: CreateTicketDto): Promise<Ticket> {
+    async create(createTicketDto: TicketDto): Promise<Ticket> {
         const createdTicket = new this.ticketModel(createTicketDto);
         return await createdTicket.save();
     }

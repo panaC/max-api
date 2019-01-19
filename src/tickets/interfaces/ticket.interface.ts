@@ -1,7 +1,8 @@
 import { Document } from 'mongoose';
 
 export interface Ticket extends Document {
-    readonly origin: string;
-    readonly destination: string;
-    readonly departureDate: Date;
+    readonly email: string;
+    readonly originCode: string;
+    readonly destinationCode: string;
+    readonly departureDateTime: Date;
 }

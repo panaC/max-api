@@ -1,15 +1,19 @@
 import * as mongoose from 'mongoose';
 
 export const TicketSchema = new mongoose.Schema({
-    origin: {
+    email: {
         type: String,
         required: true,
     },
-    destination: {
+    originCode: {
         type: String,
         required: true,
     },
-    departureDate: {
+    destinationCode: {
+        type: String,
+        required: true,
+    },
+    departureDateTime: {
         type: Date,
         required: true,
     },
