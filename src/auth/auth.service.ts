@@ -16,10 +16,8 @@ export class AuthService {
 
     }
 
-    async createToken(userDto: UserDto) {
-        // In the real-world app you shouldn't expose this method publicly
-        // instead, return a token once you verify user credentials
-        const user: JwtPayload = { email: userDto.email };
+    async createToken(e: string) {
+        const user: JwtPayload = { email: e };
         const accessToken = this.jwtService.sign(user);
         return {
             expiresIn: JWT_EXPIRATION,
@@ -38,11 +36,15 @@ export class AuthService {
         return user;
     }
 
-    async checkUser(userDto: UserDto) {
+    async setUser(userDto: UserDto) {
+        await this.userModel.update({ email: userDto.email }, userDto);
+    }
+
+    async checkUser(e: string, pass: string) {
         const user = await this.userModel.findOne({
-            email: userDto.email,
+            email: e,
         });
-        if (!(user && await bcrypt.compare(userDto.password, user.password) === true)) {
+        if (!(user && await bcrypt.compare(pass, user.password) === true)) {
             throw new Error('invalid credential');
         }
     }

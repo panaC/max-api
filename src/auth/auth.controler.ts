@@ -17,10 +17,10 @@ export class AuthController {
         status: 200,
         description: 'login success',
     })
-    public async login(@Body() userDto: UserDto) {
+    public async login(@Body() user: { email: string; password: string }) {
         try {
-            await this.authservice.checkUser(userDto);
-            return await this.authservice.createToken(userDto);
+            await this.authservice.checkUser(user.email, user.password);
+            return await this.authservice.createToken(user.email);
         } catch (err) {
             throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
         }
@@ -58,6 +58,22 @@ export class AuthController {
         }
     }
 
+    @Post('user')
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: 200,
+        description: 'update user information',
+    })
+    public async userUpdate(@Query('token') token: string, @Body() user: UserDto) {
+        try {
+            const verify = await this.authservice.verifyToken(token);
+            await this.authservice.setUser(user);
+            return 'user saved';
+        } catch (err) {
+            throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @Post('register')
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
@@ -67,7 +83,7 @@ export class AuthController {
     public async register(@Body() userDto: UserDto) {
         try {
             await this.authservice.register(userDto);
-            return await this.authservice.createToken(userDto);
+            return await this.authservice.createToken(userDto.email);
         } catch (err) {
             throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
         }
