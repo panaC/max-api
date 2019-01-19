@@ -79,5 +79,33 @@ export class TicketsController {
 
     // find all mongo db
 
-    // delette one ticket on all mongo db
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: 200,
+        description: 'find tickets : reserved appli',
+    })
+    @Get('appli')
+    async findAllAppli(@Query('credential') credential: string) {
+        try {
+            return await this.ticketsService.findAllAppli();
+        } catch (err) {
+            throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // delete one ticket on all mongo db
+
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: 200,
+        description: 'delete tickets : reserved appli',
+    })
+    @Delete('appli')
+    async deleteOneAppli(@Query('credential') credential: string) {
+        try {
+            return await this.ticketsService.deleteOneAppli();
+        } catch (err) {
+            throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

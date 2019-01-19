@@ -26,6 +26,16 @@ export class TicketsService {
     }
 
     async update(ticketDto: TicketDto) {
-        this.ticketModel.update({ email: ticketDto.email }, ticketDto);
+        await this.ticketModel.update({ email: ticketDto.email }, ticketDto);
+    }
+
+    //
+
+    async findAllAppli() {
+        await this.ticketModel.find().exec();
+    }
+
+    async deleteOneAppli(ticketDto: TicketDto) {
+        await this.ticketModel.deleteOne(ticketDto);
     }
 }
