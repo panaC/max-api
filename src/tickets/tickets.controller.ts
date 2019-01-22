@@ -15,13 +15,14 @@ export class TicketsController {
         status: 200,
         description: 'create ticket',
     })
-    @Post('user')
+    @Post()
     @ApiBearerAuth()
     @UseGuards(AuthGuard())
     async create(@Body() ticketDto: TicketDto, @Query('token') token: string) {
         try {
             // add a token verification that the email is the same that for token register
             await this.ticketsService.create(ticketDto);
+            return 'ticket saved';
         } catch (err) {
             throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
         }
@@ -32,7 +33,7 @@ export class TicketsController {
         status: 200,
         description: 'read ticket with email user',
     })
-    @Get('user')
+    @Get()
     @ApiBearerAuth()
     @UseGuards(AuthGuard())
     async read(@Query('email') email: string, @Query('token') token: string): Promise<TicketInterface[]> {
@@ -48,7 +49,7 @@ export class TicketsController {
         status: 200,
         description: 'update ticket with email user',
     })
-    @Put('user')
+    @Put()
     @ApiBearerAuth()
     @UseGuards(AuthGuard())
     async update(@Body() ticketDto: TicketDto, @Query('token') token: string) {
@@ -64,7 +65,7 @@ export class TicketsController {
         status: 200,
         description: 'delete ticket with email user',
     })
-    @Delete('user')
+    @Delete()
     @ApiBearerAuth()
     @UseGuards(AuthGuard())
     async delete(@Body() ticketDto: TicketDto, @Query('token') token: string) {
