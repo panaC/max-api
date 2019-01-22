@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { Ijourney } from './interfaces/journey.interface';
 import { JourneysService } from './journeys.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -12,9 +12,15 @@ export class JourneysController {
     async findAll(@Query('origin') origin: string,
                   @Query('destination') destination: string,
                   @Query('date') date: string): Promise<Ijourney[]> {
+
         if (origin && destination) {
-            return this.journeysService.findAll(origin, destination, date);
+            try {
+                return await this.journeysService.findAll(origin, destination, date);
+            } catch (err) {
+                throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            throw new HttpException('Bad origin or destination', HttpStatus.BAD_REQUEST);
         }
-        return Promise.reject();
     }
 }
