@@ -88,6 +88,7 @@ export class TicketsController {
     @Get('appli')
     async findAllAppli(@Query('credential') credential: string) {
         try {
+            // check credential here
             return await this.ticketsService.findAllAppli();
         } catch (err) {
             throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
@@ -104,6 +105,7 @@ export class TicketsController {
     @Delete('appli')
     async deleteOneAppli(@Query('credential') credential: string, @Body('ticket') ticketDto: TicketDto) {
         try {
+            // check credential here
             return await this.ticketsService.deleteOneAppli(ticketDto);
         } catch (err) {
             throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);

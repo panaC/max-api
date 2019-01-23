@@ -32,10 +32,10 @@ export class TicketsService {
     //
 
     async findAllAppli() {
-        await this.ticketModel.find().exec();
+        return await this.ticketModel.find().exec();
     }
 
     async deleteOneAppli(ticketDto: TicketDto) {
-        await this.ticketModel.deleteOne(ticketDto);
+        return await this.ticketModel.deleteOne(ticketDto);
     }
 }
