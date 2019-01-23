@@ -17,3 +17,5 @@ export const SALT_NUMBER = 10;
 export const JWT_EXPIRATION = 3600;
 
 export const JWT_SECRET_KEY = 'secretKey';
+
+export const AUTH_PASS_API = 'UpOg1w6hc177u7ZSgoH1ovZ9v107os6RrTUxjjI4oEl66z1DDrU0uKrDiBcxOHqv';
