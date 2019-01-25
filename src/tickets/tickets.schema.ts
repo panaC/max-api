@@ -5,7 +5,15 @@ export const TicketSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    origin: {
+        type: String,
+        required: true,
+    },
     originCode: {
+        type: String,
+        required: true,
+    },
+    destination: {
         type: String,
         required: true,
     },

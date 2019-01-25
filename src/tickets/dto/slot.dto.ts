@@ -9,7 +9,15 @@ export class TicketDto {
 
     @ApiModelProperty()
     @IsNotEmpty()
+    readonly origin: string;
+
+    @ApiModelProperty()
+    @IsNotEmpty()
     readonly originCode: string;
+
+    @ApiModelProperty()
+    @IsNotEmpty()
+    readonly destination: string;
 
     @ApiModelProperty()
     @IsNotEmpty()

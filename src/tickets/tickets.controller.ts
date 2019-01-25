@@ -1,7 +1,7 @@
 import { AUTH_PASS_API } from './../constants';
 import { Controller, Get, Post, Body, Delete, Query, HttpCode, HttpStatus, HttpException, Put, UseGuards } from '@nestjs/common';
 import { TicketDto } from './dto/slot.dto';
-import { TicketsService } from './tickets.service';
+import { TicketsService, IticketAppli } from './tickets.service';
 import { Ticket as TicketInterface } from './interfaces/ticket.interface';
 import { ApiUseTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
@@ -107,13 +107,13 @@ export class TicketsController {
         description: 'delete tickets : reserved appli',
     })
     @Delete('appli')
-    async deleteOneAppli(@Query('credential') credential: string, @Body('ticket') ticketDto: TicketDto) {
+    async deleteOneAppli(@Query('credential') credential: string, @Body() ticketAppli: IticketAppli) {
         try {
             // check credential here
             if (credential !== AUTH_PASS_API) {
                 throw new Error('Bad credential');
             }
-            return await this.ticketsService.deleteOneAppli(ticketDto);
+            return await this.ticketsService.deleteOneAppli(ticketAppli);
         } catch (err) {
             throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
         }
